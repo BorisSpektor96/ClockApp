@@ -1,0 +1,23 @@
+version: '3'
+services:
+  clock_app:
+    build:
+      context: ./clock_app
+    ports:
+      - "5001:5001"
+    networks:
+      - app-network
+
+  button_app:
+    build:
+      context: ./button_app
+    ports:
+      - "5002:5002"
+    environment:
+      - CLOCK_APP_URL=http://clock_app:5001/update_time
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
